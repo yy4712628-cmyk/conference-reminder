@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📅 تقویم همایش‌ها</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--grad-start:#84fab0;--grad-end:#8fd3f4;--accent:#10b981;--holiday:#ef4444;--today:#6366f1;--today-glow:rgba(99,102,241,0.5);--text-primary:#1f2937;--text-secondary:#6b7280;--glass-bg:rgba(255,255,255,0.7);--glass-border:rgba(255,255,255,0.5);--glass-shadow:0 8px 32px rgba(31,38,135,0.15)}
+body{font-family:'Vazirmatn',system-ui,sans-serif;min-height:100vh;padding:16px;color:var(--text-primary);background:linear-gradient(135deg,var(--grad-start) 0%,var(--grad-end) 100%);background-attachment:fixed;overflow-x:hidden;transition:background 1s ease}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;border-radius:50%;background:rgba(255,255,255,0.6);animation:float-up linear infinite;pointer-events:none}
+@keyframes float-up{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:0.8}90%{opacity:0.8}100%{transform:translateY(-10vh) scale(1);opacity:0}}
+.app-container{max-width:1300px;margin:0 auto;position:relative;z-index:1}
+.main-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+@media(max-width:1000px){.main-layout{grid-template-columns:1fr}}
+.glass-card{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-radius:20px;box-shadow:var(--glass-shadow)}
+.top-bar{padding:14px 20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.top-bar-logo{font-size:1.1rem;font-weight:800;display:flex;align-items:center;gap:8px}
+.top-bar-actions{display:flex;gap:6px;flex-wrap:wrap}
+.icon-btn{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.5);cursor:pointer;font-size:1.05rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;position:relative;font-family:inherit}
+.icon-btn:hover{background:white;transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
+.icon-btn:active{transform:translateY(0) scale(0.96)}
+.icon-btn .badge-count{position:absolute;top:-4px;right:-4px;background:#ef4444;color:white;font-size:0.65rem;font-weight:700;min-width:18px;height:18px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid white}
+.icon-btn.syncing{animation:pulse-sync 1s infinite}
+@keyframes pulse-sync{0%,100%{opacity:1}50%{opacity:0.5}}
+.icon-btn.connected{background:linear-gradient(135deg,#10b981,#059669);color:white;border-color:#10b981}
+.icon-btn.connected:hover{background:linear-gradient(135deg,#059669,#047857)}
+.tabs{display:flex;padding:5px;margin-bottom:12px;gap:4px}
+.tab{flex:1;padding:11px;text-align:center;border-radius:12px;cursor:pointer;font-weight:700;color:var(--text-secondary);transition:all 0.2s;font-size:0.88rem;border:none;background:transparent;font-family:inherit}
+.tab.active{background:linear-gradient(135deg,var(--accent),#059669);color:white;box-shadow:0 4px 12px rgba(16,185,129,0.4)}
+.cal-header{padding:18px 22px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.cal-title-wrap{display:flex;align-items:center;gap:10px}
+.season-icon{font-size:1.8rem;animation:gentle-bounce 3s ease-in-out infinite}
+@keyframes gentle-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.cal-title{font-size:1.35rem;font-weight:800;color:var(--text-primary);letter-spacing:-0.5px}
+.cal-subtitle{font-size:0.78rem;color:var(--text-secondary);margin-top:2px}
+.nav-buttons{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.nav-btn{background:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.5);color:var(--text-primary);width:40px;height:40px;border-radius:11px;cursor:pointer;font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:all 0.2s ease;font-family:inherit}
+.nav-btn:hover{background:white;transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.12)}
+.nav-btn:active{transform:translateY(0) scale(0.96)}
+.btn-today{background:linear-gradient(135deg,var(--accent),#059669);color:white;width:auto;padding:0 18px;border:none}
+.btn-year{width:auto;padding:0 12px;font-size:0.78rem;font-weight:600}
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:0 20px;margin-bottom:10px}
+.weekday{text-align:center;padding:10px 4px;font-size:0.82rem;font-weight:700;color:var(--text-secondary)}
+.weekday.friday{color:var(--holiday)}
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:0 20px 20px}
+.day-cell{aspect-ratio:1;border-radius:14px;background:rgba(255,255,255,0.5);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:all 0.25s cubic-bezier(0.4,0,0.2,1);border:2px solid transparent;padding:4px;min-height:60px;overflow:hidden;animation:stagger-in 0.4s ease backwards}
+@keyframes stagger-in{from{opacity:0;transform:translateY(12px) scale(0.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.day-cell:hover{background:rgba(255,255,255,0.85);transform:translateY(-3px) scale(1.05);box-shadow:0 10px 25px rgba(0,0,0,0.12);z-index:5}
+.day-cell.empty{background:transparent;cursor:default;pointer-events:none}
+.day-cell.empty:hover{transform:none;box-shadow:none}
+.day-cell.today{background:linear-gradient(135deg,var(--today),#8b5cf6);color:white;font-weight:800;border-color:white;animation:today-pulse 2s infinite}
+.day-cell.today .day-num{color:white}
+@keyframes today-pulse{0%{box-shadow:0 0 0 0 var(--today-glow)}70%{box-shadow:0 0 0 12px rgba(99,102,241,0)}100%{box-shadow:0 0 0 0 rgba(99,102,241,0)}}
+.day-cell.friday .day-num,.day-cell.holiday .day-num{color:var(--holiday);font-weight:700}
+.day-cell.holiday{background:rgba(254,226,226,0.5)}
+.day-cell.holiday:hover{background:rgba(254,226,226,0.8)}
+.day-num{font-size:1rem;font-weight:600;line-height:1}
+.day-sub{font-size:0.6rem;color:var(--text-secondary);margin-top:2px;font-weight:500;opacity:0.75}
+.day-dots{display:flex;gap:3px;margin-top:3px;height:5px;align-items:center;justify-content:center}
+.dot{width:6px;height:6px;border-radius:50%}
+.dot-event{background:var(--today);box-shadow:0 0 6px var(--today-glow)}
+.dot-deadline{background:#f59e0b;box-shadow:0 0 6px rgba(245,158,11,0.5)}
+.dot-holiday{background:var(--holiday);box-shadow:0 0 6px rgba(239,68,68,0.5)}
+.day-cell.has-event::before,.day-cell.holiday::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.4) 50%,transparent 70%);animation:shine 3s infinite;pointer-events:none;opacity:0}
+.day-cell.has-event:hover::before,.day-cell.holiday:hover::before{opacity:1}
+@keyframes shine{0%{transform:translateX(-100%) translateY(-100%) rotate(45deg)}100%{transform:translateX(100%) translateY(100%) rotate(45deg)}}
+.sidebar{padding:18px;display:flex;flex-direction:column;gap:12px;max-height:calc(100vh - 40px);overflow-y:auto;position:sticky;top:16px}
+.sidebar-title{font-size:1rem;font-weight:800;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid rgba(0,0,0,0.06)}
+.events-list{display:flex;flex-direction:column;gap:8px}
+.event-item{background:rgba(255,255,255,0.7);border-radius:10px;padding:10px 12px;border-right:4px solid var(--accent);cursor:pointer;transition:all 0.2s ease;animation:slide-in-right 0.35s ease backwards}
+.event-item:hover{background:white;transform:translateX(-3px);box-shadow:0 4px 14px rgba(0,0,0,0.1)}
+.event-item.holiday{border-right-color:var(--holiday);background:rgba(254,226,226,0.6)}
+.event-item.iran-event{border-right-color:var(--today);background:rgba(224,231,255,0.6)}
+.event-item.conf-event{border-right-color:#8b5cf6;background:rgba(237,233,254,0.6)}
+.event-item.conf-deadline{border-right-color:#f59e0b;background:rgba(254,243,199,0.6)}
+@keyframes slide-in-right{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:translateX(0)}}
+.event-item-header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.event-item-date{font-size:0.68rem;color:var(--text-secondary);font-weight:600;background:rgba(0,0,0,0.05);padding:2px 7px;border-radius:20px}
+.event-item-title{font-size:0.82rem;font-weight:600;line-height:1.5;margin-top:4px}
+.event-empty{text-align:center;padding:25px 16px;color:var(--text-secondary);font-size:0.82rem}
+.event-empty-icon{font-size:1.8rem;margin-bottom:6px;opacity:0.5}
+.conf-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;padding:16px}
+.conf-card{background:rgba(255,255,255,0.85);border-radius:14px;padding:14px;border-right:4px solid #8b5cf6;transition:all 0.2s ease;animation:stagger-in 0.35s ease backwards}
+.conf-card:hover{background:white;transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.1)}
+.conf-card.today{border-right-color:#10b981;background:rgba(209,250,229,0.6)}
+.conf-card.soon{border-right-color:#f59e0b;background:rgba(254,243,199,0.5)}
+.conf-card.past{border-right-color:#9ca3af;opacity:0.65}
+.conf-header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}
+.conf-title{font-size:0.95rem;font-weight:700;flex:1;word-break:break-word}
+.conf-badge{font-size:0.65rem;padding:4px 9px;border-radius:12px;font-weight:700;white-space:nowrap}
+.badge-success{background:#d1fae5;color:#065f46}
+.badge-warning{background:#fef3c7;color:#92400e}
+.conf-body p{margin:5px 0;font-size:0.82rem;color:#555;word-break:break-word;line-height:1.55}
+.conf-body a{color:#6366f1;text-decoration:none}
+.conf-body a:hover{text-decoration:underline}
+.conf-days{font-weight:700;color:var(--today)}
+.conf-days.urgent{color:#ef4444}
+.conf-days.past{color:#9ca3af}
+.conf-footer{display:flex;gap:5px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.06);flex-wrap:wrap}
+.btn{padding:7px 11px;border-radius:8px;border:none;cursor:pointer;font-size:0.78rem;font-weight:600;transition:all 0.2s;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;gap:4px}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#059669);color:white}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,0.4)}
+.btn-secondary{background:rgba(0,0,0,0.05);color:var(--text-primary)}
+.btn-secondary:hover{background:rgba(0,0,0,0.1)}
+.btn-danger{background:#fee2e2;color:#dc2626}
+.btn-danger:hover{background:#fecaca}
+.btn-block{width:100%;padding:13px;font-size:0.95rem}
+.conf-empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--text-secondary)}
+.conf-empty-icon{font-size:2.8rem;margin-bottom:10px;opacity:0.6}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<div class="app-container">
+<div class="glass-card top-bar">
+<div class="top-bar-logo"><span>📅</span><span>تقویم همایش‌ها</span></div>
+<div class="top-bar-actions">
+<button class="icon-btn" onclick="openReminderPanel()" title="یادآوری‌ها">🔔<span id="reminder-badge" class="badge-count" style="display:none">0</span></button>
+<button class="icon-btn" id="github-btn" onclick="openSettings()" title="تنظیمات GitHub">⚙️</button>
+<button class="icon-btn" onclick="exportData()" title="پشتیبان">💾</button>
+<button class="icon-btn" onclick="importData()" title="بازیابی">📂</button>
+</div>
+</div>
+<div class="glass-card tabs">
+<button class="tab active" onclick="switchTab('calendar')">📅 تقویم</button>
+<button class="tab" onclick="switchTab('conferences')">🎯 همایش‌ها</button>
+</div>
+<div id="section-calendar" class="section active">
+<div class="main-layout">
+<div>
+<div class="glass-card cal-header">
+<div class="cal-title-wrap">
+<div class="season-icon" id="season-icon">🌸</div>
+<div>
+<div class="cal-title" id="cal-title">—</div>
+<div class="cal-subtitle" id="cal-subtitle">—</div>
+</div>
+</div>
+<div class="nav-buttons">
+<button class="nav-btn btn-year" onclick="changeYear(-1)">« سال</button>
+<button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+<button class="nav-btn btn-today" onclick="goToday()">امروز</button>
+<button class="nav-btn" onclick="changeMonth(1)">›</button>
+<button class="nav-btn btn-year" onclick="changeYear(1)">سال »</button>
+</div>
+</div>
+<div class="glass-card" style="padding-bottom:16px;">
+<div class="weekdays">
+<div class="weekday">شنبه</div><div class="weekday">یک‌شنبه</div><div class="weekday">دوشنبه</div><div class="weekday">سه‌شنبه</div><div class="weekday">چهارشنبه</div><div class="weekday">پنج‌شنبه</div><div class="weekday friday">جمعه</div>
+</div>
+<div id="days-grid" class="days-grid"></div>
+</div>
+</div>
+<div class="glass-card sidebar">
+<div class="sidebar-title"><span>🎯</span><span>مناسبت‌های ماه</span></div>
+<div id="events-list" class="events-list"></div>
+</div>
+</div>
+</div>
+<div id="section-conferences" class="section">
+<div class="glass-card">
+<div id="conf-list" class="conf-list"></div>
+</div>
+</div>
+</div>
+<button class="fab" onclick="openConfModal()">＋</button>
+<div id="conf-modal" class="modal-overlay" onclick="if(event.target===this)closeConfModal()">
+<div class="modal">
+<button class="modal-close" onclick="closeConfModal()">✕</button>
+<div class="modal-header"><h2 id="conf-modal-title">➕ افزودن همایش</h2></div>
+<form id="conf-form" onsubmit="saveConf(event)">
+<input type="hidden" id="conf-id">
+<div class="form-field"><label>📌 نام همایش *</label><input type="text" id="f-name" required placeholder="مثلاً کنفرانس هوش مصنوعی"></div>
+<div class="form-field"><label>🌐 آدرس اینترنتی</label><input type="url" id="f-url" placeholder="https://example.com"></div>
+<div class="form-field"><label>📧 ایمیل یادآوری</label><input type="email" id="f-email" placeholder="you@gmail.com"></div>
+<div class="form-row">
+<div class="form-field"><label>📅 تاریخ برگزاری *</label><input type="date" id="f-event" required></div>
+<div class="form-field"><label>📝 مهلت مقاله</label><input type="date" id="f-deadline"></div>
+</div>
+<div class="form-field"><label>📍 مکان</label><input type="text" id="f-location" placeholder="دانشگاه تهران / آنلاین"></div>
+<div class="form-field"><label class="checkbox-wrap"><input type="checkbox" id="f-submitted">✅ مقاله رو ارسال کردم</label></div>
+<div class="form-field"><label>📒 یادداشت</label><textarea id="f-notes" rows="2" placeholder="یادداشت شخصی..."></textarea></div>
+<button type="submit" class="btn btn-primary btn-block">💾 ذخیره محلی</button>
+<button type="button" class="btn btn-block" id="save-github-btn" onclick="saveConfToGithub()" style="margin-top:8px;background:linear-gradient(135deg,#1f2937,#111827);color:white;display:none;">☁️ ذخیره در GitHub</button>
+</form>
+</div>
+</div><div id="day-modal" class="modal-overlay" onclick="if(event.target===this)closeDayModal()">
+<div class="modal">
+<button class="modal-close" onclick="closeDayModal()">✕</button>
+<div id="day-modal-content"></div>
+</div>
+</div>
+<div id="reminder-modal" class="modal-overlay" onclick="if(event.target===this)closeReminderPanel()">
+<div class="modal">
+<button class="modal-close" onclick="closeReminderPanel()">✕</button>
+<div class="modal-header"><h2>🔔 یادآوری‌ها</h2></div>
+<div id="reminder-content"></div>
+</div>
+</div>
+<div id="settings-modal" class="modal-overlay" onclick="if(event.target===this)closeSettings()">
+<div class="modal">
+<button class="modal-close" onclick="closeSettings()">✕</button>
+<div class="modal-header"><h2>⚙️ تنظیمات GitHub</h2></div>
+<div style="font-size:0.85rem;color:#666;line-height:1.7;margin-bottom:16px;">
+برای اینکه همایش‌ها مستقیم توی GitHub ذخیره بشن و ایمیل یادآوری بیاد، باید یه <b>Personal Access Token</b> از GitHub بگیری.
+</div>
+<div class="form-field">
+<label>🔑 GitHub Token</label>
+<input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+<div style="font-size:0.7rem;color:#888;margin-top:4px;">از <a href="https://github.com/settings/tokens/new" target="_blank" style="color:#667eea;">github.com/settings/tokens/new</a> بساز (تیک repo)</div>
+</div>
+<div class="form-field">
+<label>👤 نام کاربری GitHub</label>
+<input type="text" id="gh-user" placeholder="yy4712628-cmyk">
+</div>
+<div class="form-field">
+<label>📁 نام ریپو</label>
+<input type="text" id="gh-repo" placeholder="conference-reminder">
+</div>
+<div id="gh-status" style="font-size:0.85rem;margin:12px 0;padding:10px;border-radius:8px;display:none;"></div>
+<button type="button" class="btn btn-primary btn-block" onclick="saveSettings()">💾 ذخیره تنظیمات</button>
+<button type="button" class="btn btn-block" onclick="testGithubConnection()" style="margin-top:8px;background:#f0f2f9;color:#333;">🔍 تست اتصال</button>
+<button type="button" class="btn btn-block" onclick="loadFromGithub()" style="margin-top:8px;background:#e0e7ff;color:#3730a3;">⬇️ بارگیری لیست از GitHub</button>
+</div>
+</div>
+<div id="toast" class="toast"></div>
+<style>
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:900;padding:16px}
+.modal-overlay.show{display:flex;animation:fade-in 0.2s ease}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+.modal{background:white;border-radius:20px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:pop-in 0.3s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+@keyframes pop-in{from{opacity:0;transform:scale(0.9) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-close{position:absolute;top:14px;left:14px;background:rgba(0,0,0,0.06);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;color:#666;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-family:inherit}
+.modal-close:hover{background:rgba(0,0,0,0.12);transform:rotate(90deg)}
+.modal-header{margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0f0f0;text-align:center}
+.modal-header h2{font-size:1.05rem;font-weight:800}
+.form-field{margin-bottom:14px}
+.form-field label{display:block;margin-bottom:5px;font-weight:600;font-size:0.85rem}
+.form-field input,.form-field textarea{width:100%;padding:10px 12px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:0.92rem;font-family:inherit;background:#fafbfd;transition:all 0.2s}
+.form-field input:focus,.form-field textarea:focus{outline:none;border-color:var(--accent);background:white;box-shadow:0 0 0 3px rgba(16,185,129,0.1)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.form-row{grid-template-columns:1fr}}
+.checkbox-wrap{display:flex;align-items:center;gap:10px;padding:11px;background:#f8fafc;border-radius:10px;cursor:pointer;border:1.5px solid #e5e7eb}
+.checkbox-wrap input{width:20px;height:20px;accent-color:var(--accent);cursor:pointer}
+.day-modal-hero{text-align:center;padding:10px 0 18px;border-bottom:1px solid #f0f0f0;margin-bottom:14px}
+.day-big{font-size:3rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--today));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px}
+.day-month-name{font-size:0.95rem;color:var(--text-secondary);font-weight:600}
+.day-sub-dates{font-size:0.72rem;color:var(--text-secondary);margin-top:8px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.day-sub-dates span{background:rgba(0,0,0,0.05);padding:3px 9px;border-radius:20px}
+.modal-events{display:flex;flex-direction:column;gap:8px}
+.modal-event{display:flex;align-items:center;gap:10px;padding:11px 13px;background:#f8fafc;border-radius:10px;border-right:4px solid var(--accent);animation:slide-in-right 0.3s ease backwards}
+.modal-event.holiday{border-right-color:var(--holiday);background:#fef2f2}
+.modal-event.conf-event{border-right-color:#8b5cf6;background:#f5f3ff}
+.modal-event.conf-deadline{border-right-color:#f59e0b;background:#fffbeb}
+.modal-event-icon{font-size:1.3rem;flex-shrink:0}
+.modal-event-text{flex:1;font-size:0.85rem;font-weight:600;line-height:1.5}
+.modal-no-events{text-align:center;padding:18px;color:var(--text-secondary);font-size:0.82rem}
+.section{display:none}
+.section.active{display:block}
+body.spring{--grad-start:#84fab0;--grad-end:#8fd3f4;--accent:#10b981}
+body.summer{--grad-start:#ffecd2;--grad-end:#fcb69f;--accent:#f59e0b}
+body.autumn{--grad-start:#ffd194;--grad-end:#d1913c;--accent:#ea580c}
+body.winter{--grad-start:#a1c4fd;--grad-end:#c2e9fb;--accent:#3b82f6}
+.toast{position:fixed;bottom:30px;right:50%;transform:translateX(50%) translateY(100px);background:#1f2937;color:white;padding:12px 22px;border-radius:10px;font-size:0.85rem;z-index:2000;opacity:0;transition:all 0.3s;pointer-events:none;max-width:90vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.25)}
+.toast.show{transform:translateX(50%) translateY(0);opacity:1}
+.toast.success{background:#059669}
+.toast.error{background:#dc2626}
+.toast.info{background:#3b82f6}
+.fab{position:fixed;bottom:20px;left:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#059669);color:white;border:none;font-size:1.6rem;cursor:pointer;box-shadow:0 8px 20px rgba(16,185,129,0.4);z-index:800;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.fab:hover{transform:translateY(-3px) scale(1.05)}
+.fab:active{transform:scale(0.95)}
+@media(max-width:768px){body{padding:10px}.cal-header{padding:14px}.cal-title{font-size:1.15rem}.weekdays{padding:0 12px;gap:4px}.weekday{font-size:0.7rem;padding:6px 2px}.days-grid{padding:0 12px 14px;gap:4px}.day-cell{min-height:50px;border-radius:11px}.day-num{font-size:0.9rem}.day-sub{font-size:0.55rem}.sidebar{position:static;max-height:none}.conf-list{padding:12px;gap:10px}}
+</style><script>
+const FIXED_EVENTS={
+'1-1':{title:'جشن نوروز',icon:'🌸',holiday:true},'1-2':{title:'عید نوروز',icon:'🌷',holiday:true},'1-3':{title:'عید نوروز',icon:'🌼',holiday:true},'1-4':{title:'عید نوروز',icon:'🌻',holiday:true},'1-12':{title:'روز جمهوری اسلامی',icon:'🇮🇷',holiday:true},'1-13':{title:'روز طبیعت (سیزده‌بدر)',icon:'🌳',holiday:true},'2-1':{title:'روز معلم',icon:'📚'},'3-1':{title:'روز بهره‌وری',icon:'⚡'},'3-14':{title:'رحلت امام خمینی (ره)',icon:'🕯️',holiday:true},'3-15':{title:'قیام ۱۵ خرداد',icon:'✊',holiday:true},'4-7':{title:'روز قوه قضائیه',icon:'⚖️'},'5-14':{title:'روز قلم',icon:'✒️'},'6-5':{title:'روز پزشک',icon:'⚕️'},'6-13':{title:'روز کارمند',icon:'💼'},'7-13':{title:'روز نیروی انتظامی',icon:'👮'},'7-20':{title:'روز حافظ',icon:'📖'},'8-8':{title:'روز نوجوان',icon:'🌱'},'8-13':{title:'روز دانش‌آموز',icon:'🎓'},'8-24':{title:'روز کتاب',icon:'📚'},'9-16':{title:'روز دانشجو',icon:'🎓'},'9-30':{title:'شب یلدا',icon:'🍉'},'10-8':{title:'روز سوادآموزی',icon:'📚'},'11-22':{title:'پیروزی انقلاب اسلامی',icon:'✌️',holiday:true},'12-5':{title:'روز بزرگداشت خواجه نصیر',icon:'🔬'},'12-20':{title:'روز ملی شدن صنعت نفت',icon:'🛢️',holiday:true},'12-29':{title:'روز ملی شدن صنعت نفت',icon:'🛢️',holiday:true}};
+function toJalali(gy,gm,gd){const g_d_m=[0,31,59,90,120,151,181,212,243,273,304,334];let jy=(gy<=1600)?0:979;gy-=(gy<=1600)?621:1600;const gy2=(gm>2)?(gy+1):gy;let days=(365*gy)+Math.floor((gy2+3)/4)-Math.floor((gy2+99)/100)+Math.floor((gy2+399)/400)-80+gd+g_d_m[gm-1];jy+=33*Math.floor(days/12053);days%=12053;jy+=4*Math.floor(days/1461);days%=1461;if(days>365){jy+=Math.floor((days-1)/365);days=(days-1)%365}const jm=(days<186)?1+Math.floor(days/31):7+Math.floor((days-186)/30);const jd=1+((days<186)?(days%31):((days-186)%30));return[jy,jm,jd]}
+function jalaliToGregorian(jy,jm,jd){jy+=1595;let days=-355668+(365*jy)+(Math.floor(jy/33)*8)+Math.floor(((jy%33)+3)/4)+jd+((jm<7)?(jm-1)*31:((jm-7)*30)+186);let gy=400*Math.floor(days/146097);days%=146097;if(days>36524){gy+=100*Math.floor(--days/36524);days%=36524;if(days>=365)days++}gy+=4*Math.floor(days/1461);days%=1461;if(days>365){gy+=Math.floor((days-1)/365);days=(days-1)%365}let gd=days+1;const sal_a=[0,31,(gy%4===0&&gy%100!==0)||(gy%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(gm=0;gm<13&&gd>sal_a[gm];gm++)gd-=sal_a[gm];return[gy,gm,gd]}
+function jalaliMonthLength(jy,jm){if(jm<=6)return 31;if(jm<=11)return 30;const leap=((jy+12)%33)%4;return(leap===1)?30:29}
+function gregorianToJD(gy,gm,gd){if(gm<=2){gy--;gm+=12}const a=Math.floor(gy/100);const b=2-a+Math.floor(a/4);return Math.floor(365.25*(gy+4716))+Math.floor(30.6001*(gm+1))+gd+b-1524.5}
+const JALALI_MONTHS=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const SEASONS={1:{name:'بهار',icon:'🌸',class:'spring'},2:{name:'بهار',icon:'🌸',class:'spring'},3:{name:'بهار',icon:'🌸',class:'spring'},4:{name:'تابستان',icon:'☀️',class:'summer'},5:{name:'تابستان',icon:'☀️',class:'summer'},6:{name:'تابستان',icon:'☀️',class:'summer'},7:{name:'پاییز',icon:'🍂',class:'autumn'},8:{name:'پاییز',icon:'🍂',class:'autumn'},9:{name:'پاییز',icon:'🍂',class:'autumn'},10:{name:'زمستان',icon:'❄️',class:'winter'},11:{name:'زمستان',icon:'❄️',class:'winter'},12:{name:'زمستان',icon:'❄️',class:'winter'}};
+const now=new Date();
+const[todayJY,todayJM,todayJD]=toJalali(now.getFullYear(),now.getMonth()+1,now.getDate());
+let currentJY=todayJY;let currentJM=todayJM;let editingId=null;
+const LS_KEY='conference_reminder_v1';
+const LS_GITHUB='conference_github_config';
+function getConferences(){try{const d=localStorage.getItem(LS_KEY);return d?JSON.parse(d):[]}catch{return[]}}
+function saveConferences(arr){localStorage.setItem(LS_KEY,JSON.stringify(arr))}
+function getGithubConfig(){try{const d=localStorage.getItem(LS_GITHUB);return d?JSON.parse(d):{token:'',user:'',repo:''}}catch{return{token:'',user:'',repo:''}}}
+function saveGithubConfig(cfg){localStorage.setItem(LS_GITHUB,JSON.stringify(cfg))}
+function createParticles(){const wrap=document.getElementById('particles');wrap.innerHTML='';const count=window.innerWidth<600?15:30;for(let i=0;i<count;i++){const p=document.createElement('div');p.className='particle';const size=Math.random()*8+3;p.style.width=size+'px';p.style.height=size+'px';p.style.left=Math.random()*100+'%';p.style.animationDuration=(Math.random()*20+15)+'s';p.style.animationDelay=(Math.random()*15)+'s';p.style.opacity=Math.random()*0.5+0.2;wrap.appendChild(p)}}
+function daysUntil(dateStr){if(!dateStr)return null;const now=new Date();now.setHours(0,0,0,0);const d=new Date(dateStr);d.setHours(0,0,0,0);return Math.round((d-now)/86400000)}
+function escapeHtml(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function renderCalendar(){const season=SEASONS[currentJM];document.body.className=season.class;document.getElementById('season-icon').textContent=season.icon;document.getElementById('cal-title').textContent=`${JALALI_MONTHS[currentJM-1]} ${currentJY}`;const[gy,gm]=jalaliToGregorian(currentJY,currentJM,15);document.getElementById('cal-subtitle').textContent=`${season.name} ${currentJY} | ${gy}`;const grid=document.getElementById('days-grid');grid.innerHTML='';const monthLen=jalaliMonthLength(currentJY,currentJM);const[g1,g2,g3]=jalaliToGregorian(currentJY,currentJM,1);const firstDay=new Date(g1,g2-1,g3);const firstWeekday=(firstDay.getDay()+1)%7;for(let i=0;i<firstWeekday;i++){const div=document.createElement('div');div.className='day-cell empty';grid.appendChild(div)}const conferences=getConferences();for(let day=1;day<=monthLen;day++){const[gy2,gm2,gd2]=jalaliToGregorian(currentJY,currentJM,day);const gStr=`${gy2}-${String(gm2).padStart(2,'0')}-${String(gd2).padStart(2,'0')}`;const gDateObj=new Date(gy2,gm2-1,gd2);const isFriday=gDateObj.getDay()===5;const isToday=(currentJY===todayJY&&currentJM===todayJM&&day===todayJD);const cell=document.createElement('div');cell.className='day-cell';cell.style.animationDelay=(day*0.012)+'s';if(isToday)cell.classList.add('today');if(isFriday)cell.classList.add('friday');const fixedKey=`${currentJM}-${day}`;const fixedEvent=FIXED_EVENTS[fixedKey];if(fixedEvent&&fixedEvent.holiday)cell.classList.add('holiday');const userEvents=conferences.filter(c=>c.event_date===gStr);const userDeadlines=conferences.filter(c=>c.paper_deadline===gStr&&!c.paper_submitted);if(userEvents.length||userDeadlines.length)cell.classList.add('has-event');const jd=gregorianToJD(gy2,gm2,gd2);const qd=Math.floor((jd-1948440)*30/29.530588853);const qDay=((qd-1)%29)+1;let dotsHtml='<div class="day-dots">';if(fixedEvent)dotsHtml+='<span class="dot dot-holiday"></span>';if(userEvents.length)dotsHtml+='<span class="dot dot-event"></span>';if(userDeadlines.length)dotsHtml+='<span class="dot dot-deadline"></span>';dotsHtml+='</div>';cell.innerHTML=`<div class="day-num">${day}</div><div class="day-sub">${gd2}/${gm2} • ${qDay}</div>${dotsHtml}`;cell.onclick=()=>showDayModal(currentJY,currentJM,day,fixedEvent,userEvents,userDeadlines,gy2,gm2,gd2,qDay);grid.appendChild(cell)}renderEventsList(conferences);updateReminderBadge()}
+function renderEventsList(conferences){const wrap=document.getElementById('events-list');const items=[];const monthLen=jalaliMonthLength(currentJY,currentJM);for(let day=1;day<=monthLen;day++){const fixedKey=`${currentJM}-${day}`;const fixedEvent=FIXED_EVENTS[fixedKey];if(fixedEvent){items.push({day,title:fixedEvent.title,icon:fixedEvent.icon,type:fixedEvent.holiday?'holiday':'iran-event'})}const[gy2,gm2,gd2]=jalaliToGregorian(currentJY,currentJM,day);const gStr=`${gy2}-${String(gm2).padStart(2,'0')}-${String(gd2).padStart(2,'0')}`;conferences.filter(c=>c.event_date===gStr).forEach(c=>{items.push({day,title:c.name,icon:'🎯',type:'conf-event'})});conferences.filter(c=>c.paper_deadline===gStr&&!c.paper_submitted).forEach(c=>{items.push({day,title:`مهلت مقاله: ${c.name}`,icon:'📝',type:'conf-deadline'})})}if(!items.length){wrap.innerHTML=`<div class="event-empty"><div class="event-empty-icon">🌟</div><div>مناسبت خاصی در این ماه نیست</div></div>`;return}wrap.innerHTML=items.map((item,idx)=>`<div class="event-item ${item.type}" style="animation-delay: ${idx*0.04}s"><div class="event-item-header"><span class="event-item-date">${item.day} ${JALALI_MONTHS[currentJM-1]}</span></div><div class="event-item-title">${item.icon} ${escapeHtml(item.title)}</div></div>`).join('')}
+function showDayModal(jy,jm,jd,fixedEvent,userEvents,userDeadlines,gy,gm,gd,qDay){const modal=document.getElementById('day-modal');const content=document.getElementById('day-modal-content');const allEvents=[];if(fixedEvent){allEvents.push({icon:fixedEvent.icon,text:fixedEvent.title,type:fixedEvent.holiday?'holiday':''})}userEvents.forEach(e=>{allEvents.push({icon:'🎯',text:e.name,type:'conf-event'})});userDeadlines.forEach(e=>{allEvents.push({icon:'📝',text:`مهلت مقاله ${e.name}`,type:'conf-deadline'})});let eventsHtml;if(allEvents.length){eventsHtml=allEvents.map((e,idx)=>`<div class="modal-event ${e.type}" style="animation-delay: ${idx*0.06}s"><div class="modal-event-icon">${e.icon}</div><div class="modal-event-text">${escapeHtml(e.text)}</div></div>`).join('')}else{eventsHtml='<div class="modal-no-events">🌟 رویداد خاصی برای این روز نیست</div>'}content.innerHTML=`<div class="day-modal-hero"><div class="day-big">${jd}</div><div class="day-month-name">${JALALI_MONTHS[jm-1]} ${jy}</div><div class="day-sub-dates"><span>📅 ${gd}/${gm}/${gy}</span><span>🌙 ${qDay}</span></div></div><div class="modal-events">${eventsHtml}</div>`;modal.classList.add('show')}
+function closeDayModal(){document.getElementById('day-modal').classList.remove('show')}
+function changeMonth(dir){currentJM+=dir;if(currentJM>12){currentJM=1;currentJY++}if(currentJM<1){currentJM=12;currentJY--}renderCalendar()}
+function changeYear(dir){currentJY+=dir;renderCalendar()}
+function goToday(){currentJY=todayJY;currentJM=todayJM;renderCalendar()}
+function renderConferences(){const wrap=document.getElementById('conf-list');const conferences=getConferences();if(!conferences.length){wrap.innerHTML=`<div class="conf-empty"><div class="conf-empty-icon">🎯</div><p>هنوز هیچ همایشی اضافه نکردی</p><button class="btn btn-primary" style="margin-top:12px" onclick="openConfModal()">➕ اولین همایش</button></div>`;return}const sorted=[...conferences].sort((a,b)=>a.event_date.localeCompare(b.event_date));wrap.innerHTML=sorted.map((c,idx)=>{const d=daysUntil(c.event_date);let cls='';if(d<0)cls='past';else if(d===0)cls='today';else if(d<=7)cls='soon';let daysLabel='';if(d>0)daysLabel=`<span class="conf-days${d<=3?' urgent':''}">(${d} روز مونده)</span>`;else if(d===0)daysLabel=`<span class="conf-days" style="color:#10b981">🎉 امروز!</span>`;else daysLabel=`<span class="conf-days past">گذشته</span>`;const sub=c.paper_submitted?'<span class="conf-badge badge-success">✅ ارسال شد</span>':'<span class="conf-badge badge-warning">⏳ ارسال نشده</span>';let deadlineLine='';if(c.paper_deadline){const dd=!c.paper_submitted?daysUntil(c.paper_deadline):null;let dl='';if(dd!==null){if(dd===0)dl='<span class="conf-days urgent">(امروز!)</span>';else if(dd>0)dl=`<span class="conf-days urgent">(${dd} روز)</span>`}deadlineLine=`<p>📝 مهلت مقاله: ${c.paper_deadline} ${dl}</p>`}return`<div class="conf-card ${cls}" style="animation-delay: ${idx*0.05}s"><div class="conf-header"><div class="conf-title">${escapeHtml(c.name)}</div>${sub}</div><div class="conf-body">${c.url?`<p>🌐 <a href="${escapeHtml(c.url)}" target="_blank">${escapeHtml(c.url)}</a></p>`:''}<p>📅 برگزاری: ${c.event_date} ${daysLabel}</p>${deadlineLine}${c.location?`<p>📍 ${escapeHtml(c.location)}</p>`:''}${c.notes?`<p style="background:#f8fafc;padding:6px 8px;border-radius:6px;font-size:0.78rem;margin-top:6px">📒 ${escapeHtml(c.notes)}</p>`:''}</div><div class="conf-footer"><button class="btn btn-secondary" onclick="toggleSubmitted(${c.id})">${c.paper_submitted?'🔁 لغو':'✅ ثبت ارسال'}</button><button class="btn btn-secondary" onclick="editConf(${c.id})">✏️ ویرایش</button><button class="btn btn-danger" onclick="delConf(${c.id})">🗑</button></div></div>`}).join('')}function openConfModal(){editingId=null;document.getElementById('conf-modal-title').textContent='➕ افزودن همایش';document.getElementById('conf-form').reset();document.getElementById('conf-id').value='';document.getElementById('conf-modal').classList.add('show');checkGithubButton()}
+function closeConfModal(){document.getElementById('conf-modal').classList.remove('show')}
+function editConf(id){const c=getConferences().find(x=>x.id===id);if(!c)return;editingId=id;document.getElementById('conf-modal-title').textContent='✏️ ویرایش همایش';document.getElementById('f-name').value=c.name;document.getElementById('f-url').value=c.url||'';document.getElementById('f-email').value=c.email||'';document.getElementById('f-event').value=c.event_date;document.getElementById('f-deadline').value=c.paper_deadline||'';document.getElementById('f-location').value=c.location||'';document.getElementById('f-submitted').checked=c.paper_submitted;document.getElementById('f-notes').value=c.notes||'';document.getElementById('conf-modal').classList.add('show');checkGithubButton()}
+function saveConf(ev){ev.preventDefault();const data={name:document.getElementById('f-name').value.trim(),url:document.getElementById('f-url').value.trim(),email:document.getElementById('f-email').value.trim(),event_date:document.getElementById('f-event').value,paper_deadline:document.getElementById('f-deadline').value||null,location:document.getElementById('f-location').value.trim(),paper_submitted:document.getElementById('f-submitted').checked,notes:document.getElementById('f-notes').value.trim()};const arr=getConferences();if(editingId){const idx=arr.findIndex(x=>x.id===editingId);arr[idx]={...arr[idx],...data};showToast('ویرایش شد ✅','success')}else{data.id=Date.now();arr.push(data);showToast('ذخیره شد ✅','success')}saveConferences(arr);closeConfModal();renderConferences();renderCalendar()}
+function delConf(id){if(!confirm('مطمئنی می‌خوای حذف کنی؟'))return;const arr=getConferences().filter(x=>x.id!==id);saveConferences(arr);renderConferences();renderCalendar();showToast('حذف شد 🗑','success')}
+function toggleSubmitted(id){const arr=getConferences();const c=arr.find(x=>x.id===id);if(!c)return;c.paper_submitted=!c.paper_submitted;saveConferences(arr);renderConferences();renderCalendar()}
+function getReminderItems(){const conferences=getConferences();const items=[];conferences.forEach(c=>{const d=daysUntil(c.event_date);if(d>=0&&d<=7){items.push({conf:c,type:'event',days:d})}if(c.paper_deadline&&!c.paper_submitted){const dd=daysUntil(c.paper_deadline);if(dd>=0&&dd<=7){items.push({conf:c,type:'deadline',days:dd})}}});return items}
+function updateReminderBadge(){const items=getReminderItems();const badge=document.getElementById('reminder-badge');if(items.length>0){badge.textContent=items.length;badge.style.display='flex'}else{badge.style.display='none'}}
+function openReminderPanel(){const content=document.getElementById('reminder-content');const items=getReminderItems();if(!items.length){content.innerHTML=`<div class="modal-no-events" style="padding:30px">🎉 هیچ یادآوری فوری‌ای نداری!</div>`;document.getElementById('reminder-modal').classList.add('show');return}items.sort((a,b)=>a.days-b.days);content.innerHTML=`<div style="display:flex;flex-direction:column;gap:10px;">${items.map(it=>{const c=it.conf;const isDeadline=it.type==='deadline';const title=isDeadline?(it.days===0?`🚨 امروز آخرین مهلت مقاله ${c.name}!`:`⏰ ${it.days} روز تا مهلت مقاله ${c.name}`):(it.days===0?`🎉 امروز همایش ${c.name} برگزار می‌شه!`:`🔔 ${it.days} روز تا همایش ${c.name}`);return`<div class="modal-event ${isDeadline?'conf-deadline':'conf-event'}"><div class="modal-event-icon">${isDeadline?'📝':'🎯'}</div><div class="modal-event-text">${escapeHtml(title)}<div style="font-size:0.72rem;color:#888;margin-top:4px;font-weight:500;">${c.email?`📧 ${escapeHtml(c.email)}`:'⚠️ ایمیل ثبت نشده'}</div></div></div>`}).join('')}</div>`;document.getElementById('reminder-modal').classList.add('show')}
+function closeReminderPanel(){document.getElementById('reminder-modal').classList.remove('show')}
+function exportData(){const data=JSON.stringify(getConferences(),null,2);const blob=new Blob([data],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`conferences-${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(url);showToast('💾 پشتیبان دانلود شد','success')}
+function importData(){const input=document.createElement('input');input.type='file';input.accept='.json';input.onchange=(e)=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=(ev)=>{try{const d=JSON.parse(ev.target.result);if(Array.isArray(d)){saveConferences(d);renderConferences();renderCalendar();showToast('✅ بازیابی شد','success')}else showToast('❌ فایل نامعتبر','error')}catch{showToast('❌ خطا در خواندن','error')}};reader.readAsText(f)};input.click()}
+function switchTab(t){document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));document.querySelectorAll('.section').forEach(el=>el.classList.remove('active'));if(t==='calendar'){document.querySelectorAll('.tab')[0].classList.add('active');document.getElementById('section-calendar').classList.add('active');renderCalendar()}else{document.querySelectorAll('.tab')[1].classList.add('active');document.getElementById('section-conferences').classList.add('active');renderConferences()}}
+let toastTimer;function showToast(msg,type){const el=document.getElementById('toast');el.textContent=msg;el.className='toast show '+(type||'');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2800)}
+function openSettings(){const cfg=getGithubConfig();document.getElementById('gh-token').value=cfg.token||'';document.getElementById('gh-user').value=cfg.user||'';document.getElementById('gh-repo').value=cfg.repo||'';document.getElementById('gh-status').style.display='none';document.getElementById('settings-modal').classList.add('show')}
+function closeSettings(){document.getElementById('settings-modal').classList.remove('show')}
+function saveSettings(){const token=document.getElementById('gh-token').value.trim();const user=document.getElementById('gh-user').value.trim();const repo=document.getElementById('gh-repo').value.trim();if(!token||!user||!repo){showToast('❌ همه فیلدها رو پر کن','error');return}saveGithubConfig({token,user,repo});showToast('✅ تنظیمات ذخیره شد','success');checkGithubButton()}
+function showGhStatus(msg,type){const el=document.getElementById('gh-status');el.textContent=msg;el.style.display='block';if(type==='success'){el.style.background='#d1fae5';el.style.color='#065f46'}else if(type==='error'){el.style.background='#fee2e2';el.style.color='#991b1b'}else{el.style.background='#dbeafe';el.style.color='#1e40af'}}
+async function testGithubConnection(){const cfg=getGithubConfig();if(!cfg.token||!cfg.user||!cfg.repo){showGhStatus('❌ اول تنظیمات رو ذخیره کن','error');return}showGhStatus('⏳ در حال تست...','info');try{const res=await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}`,{headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}});if(res.ok){const data=await res.json();showGhStatus(`✅ متصل به ${data.full_name}`,'success')}else if(res.status===401){showGhStatus('❌ توکن نامعتبره','error')}else if(res.status===404){showGhStatus('❌ ریپو پیدا نشد','error')}else{showGhStatus(`❌ خطا: ${res.status}`,'error')}}catch(e){showGhStatus(`❌ خطای شبکه: ${e.message}`,'error')}}
+async function loadFromGithub(){const cfg=getGithubConfig();if(!cfg.token||!cfg.user||!cfg.repo){showToast('❌ اول تنظیمات رو ذخیره کن','error');return}showGhStatus('⏳ در حال بارگیری...','info');try{const res=await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/conferences.json`,{headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}});if(!res.ok){if(res.status===404){showGhStatus('⚠️ فایل conferences.json توی ریپو نیست','error')}else{showGhStatus(`❌ خطا: ${res.status}`,'error')}return}const data=await res.json();const content=atob(data.content);const confs=JSON.parse(content);saveConferences(confs);renderConferences();renderCalendar();showGhStatus(`✅ ${confs.length} همایش بارگیری شد`,'success');showToast(`✅ ${confs.length} همایش از GitHub بارگیری شد`,'success')}catch(e){showGhStatus(`❌ خطا: ${e.message}`,'error')}}
+async function saveConfToGithub(){const cfg=getGithubConfig();if(!cfg.token||!cfg.user||!cfg.repo){showToast('❌ اول تنظیمات GitHub رو ذخیره کن','error');openSettings();return}const data={name:document.getElementById('f-name').value.trim(),url:document.getElementById('f-url').value.trim(),email:document.getElementById('f-email').value.trim(),event_date:document.getElementById('f-event').value,paper_deadline:document.getElementById('f-deadline').value||null,location:document.getElementById('f-location').value.trim(),paper_submitted:document.getElementById('f-submitted').checked,notes:document.getElementById('f-notes').value.trim()};if(!data.name||!data.event_date){showToast('❌ نام و تاریخ الزامی','error');return}const arr=getConferences();if(editingId){const idx=arr.findIndex(x=>x.id===editingId);arr[idx]={...arr[idx],...data}}else{data.id=Date.now();arr.push(data)}saveConferences(arr);const btn=document.getElementById('save-github-btn');btn.textContent='⏳ در حال ذخیره...';btn.disabled=true;try{let sha=null;const getRes=await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/conferences.json`,{headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json'}});if(getRes.ok){const getData=await getRes.json();sha=getData.sha}const content=btoa(unescape(encodeURIComponent(JSON.stringify(arr,null,2))));const body={message:`Update conferences (${new Date().toISOString()})`,content:content};if(sha)body.sha=sha;const putRes=await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/conferences.json`,{method:'PUT',headers:{'Authorization':`token ${cfg.token}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});if(putRes.ok){showToast('☁️ در GitHub ذخیره شد ✅','success');closeConfModal();renderConferences();renderCalendar()}else{const err=await putRes.json();showToast(`❌ خطا: ${err.message||putRes.status}`,'error')}}catch(e){showToast(`❌ خطا: ${e.message}`,'error')}finally{btn.textContent='☁️ ذخیره در GitHub';btn.disabled=false}}
+function checkGithubButton(){const cfg=getGithubConfig();const btn=document.getElementById('save-github-btn');const iconBtn=document.getElementById('github-btn');if(cfg.token&&cfg.user&&cfg.repo){btn.style.display='flex';iconBtn.classList.add('connected');iconBtn.title='متصل به GitHub'}else{btn.style.display='none';iconBtn.classList.remove('connected');iconBtn.title='تنظیمات GitHub'}}
+document.addEventListener('keydown',(e)=>{if(e.target.matches('input, textarea'))return;if(e.key==='ArrowRight')changeMonth(-1);if(e.key==='ArrowLeft')changeMonth(1);if(e.key==='Escape'){closeDayModal();closeConfModal();closeReminderPanel();closeSettings()}if(e.key==='t'||e.key==='T')goToday()});
+createParticles();renderCalendar();renderConferences();checkGithubButton();
+window.addEventListener('resize',()=>{clearTimeout(window._resizeTimer);window._resizeTimer=setTimeout(createParticles,300)});
+</script>
+</body>
+</html>
