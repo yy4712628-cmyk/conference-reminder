@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "name": "کنفرانس هوش مصنوعی ایران",
-    "url": "https://ai-conf.ir",
-    "email": "your_email@gmail.com",
-    "event_date": "2026-10-15",
-    "paper_deadline": "2026-09-20",
+    "name": "کنفرانس تست",
+    "url": "https://test.com",
+    "email": "molaeibardsir@gmail.com",
+    "event_date": "2026-10-02",
+    "paper_deadline": null,
     "paper_submitted": false,
-    "location": "دانشگاه تهران",
-    "notes": "باید چکیده آماده کنم"
+    "location": "آنلاین",
+    "notes": "تست ارسال ایمیل خودکار"
   }
 ]
