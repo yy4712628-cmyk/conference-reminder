@@ -1,13 +1,24 @@
 [
   {
-    "id": 1,
-    "name": "کنفرانس تست",
-    "url": "https://test.com",
+    "name": "صقلیسب",
+    "url": "https://notebook.google.com/notebook/a54dad44-9dc4-42de-afc1-c7bf76a99103",
+    "email": "molaeibardsir@gmail.com",
+    "event_date": "2026-10-02",
+    "paper_deadline": "2026-10-07",
+    "location": "شسز",
+    "paper_submitted": true,
+    "notes": "",
+    "id": 1790681442801
+  },
+  {
+    "name": "sa",
+    "url": "",
     "email": "molaeibardsir@gmail.com",
     "event_date": "2026-10-02",
     "paper_deadline": null,
-    "paper_submitted": false,
-    "location": "آنلاین",
-    "notes": "تست ارسال ایمیل خودکار"
+    "location": "",
+    "paper_submitted": true,
+    "notes": "",
+    "id": 1790681491788
   }
 ]
