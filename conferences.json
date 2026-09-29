@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "کنفرانس هوش مصنوعی ایران",
+    "url": "https://ai-conf.ir",
+    "email": "your_email@gmail.com",
+    "event_date": "2026-10-15",
+    "paper_deadline": "2026-09-20",
+    "paper_submitted": false,
+    "location": "دانشگاه تهران",
+    "notes": "باید چکیده آماده کنم"
+  }
+]
